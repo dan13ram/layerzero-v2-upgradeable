@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.20;
 
-import {PreCrimeUpgradeable, PreCrimePeer} from "../../precrime/PreCrimeUpgradeable.sol";
-import {InboundPacket} from "../../precrime/libs/Packet.sol";
-import {OmniCounterUpgradeable} from "./OmniCounterUpgradeable.sol";
+import { PreCrimeUpgradeable, PreCrimePeer } from "../../precrime/PreCrimeUpgradeable.sol";
+import { InboundPacket } from "../../precrime/libs/Packet.sol";
+import { OmniCounterUpgradeable } from "./OmniCounterUpgradeable.sol";
 
 contract OmniCounterPreCrimeUpgradeable is PreCrimeUpgradeable {
     struct ChainCount {
@@ -54,7 +54,7 @@ contract OmniCounterPreCrimeUpgradeable is PreCrimeUpgradeable {
         for (uint256 i = 0; i < _eids.length; i++) {
             uint32 remoteEid = _eids[i];
             ChainCount[] memory remoteChainCounts = abi.decode(_simulations[i], (ChainCount[]));
-            (uint256 _inboundCount,) = _findChainCounts(localChainCounts, remoteEid);
+            (uint256 _inboundCount, ) = _findChainCounts(localChainCounts, remoteEid);
             (, uint256 _outboundCount) = _findChainCounts(remoteChainCounts, localEid);
             if (_inboundCount > _outboundCount) {
                 revert CrimeFound("inboundCount > outboundCount");
@@ -62,11 +62,10 @@ contract OmniCounterPreCrimeUpgradeable is PreCrimeUpgradeable {
         }
     }
 
-    function _findChainCounts(ChainCount[] memory _chainCounts, uint32 _remoteEid)
-        internal
-        pure
-        returns (uint256, uint256)
-    {
+    function _findChainCounts(
+        ChainCount[] memory _chainCounts,
+        uint32 _remoteEid
+    ) internal pure returns (uint256, uint256) {
         for (uint256 i = 0; i < _chainCounts.length; i++) {
             if (_chainCounts[i].remoteEid == _remoteEid) {
                 return (_chainCounts[i].inboundCount, _chainCounts[i].outboundCount);
@@ -75,12 +74,9 @@ contract OmniCounterPreCrimeUpgradeable is PreCrimeUpgradeable {
         return (0, 0);
     }
 
-    function _getPreCrimePeers(InboundPacket[] memory _packets)
-        internal
-        view
-        override
-        returns (PreCrimePeer[] memory peers)
-    {
+    function _getPreCrimePeers(
+        InboundPacket[] memory _packets
+    ) internal view override returns (PreCrimePeer[] memory peers) {
         PreCrimePeer[] memory allPeers = preCrimePeers();
         PreCrimePeer[] memory peersTmp = new PreCrimePeer[](_packets.length);
 

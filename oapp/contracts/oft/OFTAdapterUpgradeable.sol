@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.20;
 
-import {IERC20Metadata, IERC20} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {IOFT, OFTCoreUpgradeable} from "./OFTCoreUpgradeable.sol";
+import { IERC20Metadata, IERC20 } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { IOFT, OFTCoreUpgradeable } from "./OFTCoreUpgradeable.sol";
 
 /**
  * @title OFTAdapter Contract
@@ -27,9 +27,10 @@ abstract contract OFTAdapterUpgradeable is OFTCoreUpgradeable {
      * @param _token The address of the ERC-20 token to be adapted.
      * @param _lzEndpoint The LayerZero endpoint address.
      */
-    constructor(address _token, address _lzEndpoint)
-        OFTCoreUpgradeable(IERC20Metadata(_token).decimals(), _lzEndpoint)
-    {
+    constructor(
+        address _token,
+        address _lzEndpoint
+    ) OFTCoreUpgradeable(IERC20Metadata(_token).decimals(), _lzEndpoint) {
         innerToken = IERC20(_token);
     }
 
@@ -95,12 +96,11 @@ abstract contract OFTAdapterUpgradeable is OFTCoreUpgradeable {
      * IF the 'innerToken' applies something like a transfer fee, the default will NOT work...
      * a pre/post balance check will need to be done to calculate the amountReceivedLD.
      */
-    function _debit(uint256 _amountLD, uint256 _minAmountLD, uint32 _dstEid)
-        internal
-        virtual
-        override
-        returns (uint256 amountSentLD, uint256 amountReceivedLD)
-    {
+    function _debit(
+        uint256 _amountLD,
+        uint256 _minAmountLD,
+        uint32 _dstEid
+    ) internal virtual override returns (uint256 amountSentLD, uint256 amountReceivedLD) {
         (amountSentLD, amountReceivedLD) = _debitView(_amountLD, _minAmountLD, _dstEid);
         // @dev Lock tokens by moving them into this contract from the caller.
         innerToken.safeTransferFrom(msg.sender, address(this), amountSentLD);
@@ -117,12 +117,11 @@ abstract contract OFTAdapterUpgradeable is OFTCoreUpgradeable {
      * IF the 'innerToken' applies something like a transfer fee, the default will NOT work...
      * a pre/post balance check will need to be done to calculate the amountReceivedLD.
      */
-    function _credit(address _to, uint256 _amountLD, uint32 /*_srcEid*/ )
-        internal
-        virtual
-        override
-        returns (uint256 amountReceivedLD)
-    {
+    function _credit(
+        address _to,
+        uint256 _amountLD,
+        uint32 /*_srcEid*/
+    ) internal virtual override returns (uint256 amountReceivedLD) {
         // @dev Unlock the tokens and transfer to the recipient.
         innerToken.safeTransfer(_to, _amountLD);
         // @dev In the case of NON-default OFTAdapter, the amountLD MIGHT not be == amountReceivedLD.

@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import {PreCrimePeer} from "../../contracts/precrime/interfaces/IPreCrime.sol";
-import {IOAppPreCrimeSimulator} from "../../contracts/precrime/interfaces/IOAppPreCrimeSimulator.sol";
-import {PreCrimeUpgradeable} from "../../contracts/precrime/PreCrimeUpgradeable.sol";
-import {InboundPacket} from "../../contracts/precrime/libs/Packet.sol";
+import { PreCrimePeer } from "../../contracts/precrime/interfaces/IPreCrime.sol";
+import { IOAppPreCrimeSimulator } from "../../contracts/precrime/interfaces/IOAppPreCrimeSimulator.sol";
+import { PreCrimeUpgradeable } from "../../contracts/precrime/PreCrimeUpgradeable.sol";
+import { InboundPacket } from "../../contracts/precrime/libs/Packet.sol";
 
-import {PreCrimeV2SimulatorUpgradeableMock} from "./PreCrimeV2SimulatorUpgradeableMock.sol";
+import { PreCrimeV2SimulatorUpgradeableMock } from "./PreCrimeV2SimulatorUpgradeableMock.sol";
 
 contract PreCrimeV2UpgradeableMock is PreCrimeUpgradeable {
     constructor(address _endpoint, address _simulator) PreCrimeUpgradeable(_endpoint, _simulator) {}
@@ -23,12 +23,9 @@ contract PreCrimeV2UpgradeableMock is PreCrimeUpgradeable {
         return abi.encode(PreCrimeV2SimulatorUpgradeableMock(simulator).count());
     }
 
-    function _getPreCrimePeers(InboundPacket[] memory _packets)
-        internal
-        view
-        override
-        returns (PreCrimePeer[] memory peers)
-    {
+    function _getPreCrimePeers(
+        InboundPacket[] memory _packets
+    ) internal view override returns (PreCrimePeer[] memory peers) {
         for (uint256 i = 0; i < _packets.length; i++) {
             InboundPacket memory packet = _packets[i];
             if (IOAppPreCrimeSimulator(simulator).isPeer(packet.origin.srcEid, packet.origin.sender)) {

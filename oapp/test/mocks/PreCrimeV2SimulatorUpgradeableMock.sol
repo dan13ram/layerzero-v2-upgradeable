@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import {Origin} from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/ILayerZeroEndpointV2.sol";
-import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import { Origin } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/ILayerZeroEndpointV2.sol";
+import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
-import {OAppPreCrimeSimulatorUpgradeable} from "../../contracts/precrime/OAppPreCrimeSimulatorUpgradeable.sol";
+import { OAppPreCrimeSimulatorUpgradeable } from "../../contracts/precrime/OAppPreCrimeSimulatorUpgradeable.sol";
 
 contract PreCrimeV2SimulatorUpgradeableMock is OAppPreCrimeSimulatorUpgradeable {
     uint256 public count;
@@ -18,9 +18,9 @@ contract PreCrimeV2SimulatorUpgradeableMock is OAppPreCrimeSimulatorUpgradeable 
 
     function _lzReceiveSimulate(
         Origin calldata _origin,
-        bytes32, /*_guid*/
-        bytes calldata, /*_message*/
-        address, /*_executor*/
+        bytes32 /*_guid*/,
+        bytes calldata /*_message*/,
+        address /*_executor*/,
         bytes calldata /*_extraData*/
     ) internal override {
         if (_origin.srcEid == 0) revert InvalidEid();

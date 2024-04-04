@@ -2,14 +2,14 @@
 
 pragma solidity ^0.8.15;
 
-import {Origin} from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/ILayerZeroEndpointV2.sol";
+import { Origin } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/ILayerZeroEndpointV2.sol";
 
-import {IPreCrime, PreCrimePeer} from "../contracts/precrime/interfaces/IPreCrime.sol";
-import {InboundPacket} from "../contracts/precrime/libs/Packet.sol";
+import { IPreCrime, PreCrimePeer } from "../contracts/precrime/interfaces/IPreCrime.sol";
+import { InboundPacket } from "../contracts/precrime/libs/Packet.sol";
 
-import {TestHelper} from "./TestHelper.sol";
-import {PreCrimeV2UpgradeableMock} from "./mocks/PreCrimeV2UpgradeableMock.sol";
-import {PreCrimeV2SimulatorUpgradeableMock} from "./mocks/PreCrimeV2SimulatorUpgradeableMock.sol";
+import { TestHelper } from "./TestHelper.sol";
+import { PreCrimeV2UpgradeableMock } from "./mocks/PreCrimeV2UpgradeableMock.sol";
+import { PreCrimeV2SimulatorUpgradeableMock } from "./mocks/PreCrimeV2SimulatorUpgradeableMock.sol";
 
 import "forge-std/console.sol";
 
@@ -163,15 +163,23 @@ contract PreCrimeV2Test is TestHelper {
         assertEq(preCrime.results(2), abi.encode(3));
     }
 
-    function _buildPacket(uint32 _srcEid, bytes32 _sender, uint64 _nonce, uint256 _packetNum)
-        internal
-        view
-        returns (bytes[] memory)
-    {
+    function _buildPacket(
+        uint32 _srcEid,
+        bytes32 _sender,
+        uint64 _nonce,
+        uint256 _packetNum
+    ) internal view returns (bytes[] memory) {
         bytes[] memory packets = new bytes[](_packetNum);
         for (uint256 i = 0; i < _packetNum; ++i) {
             InboundPacket memory packet = InboundPacket(
-                Origin(_srcEid, _sender, _nonce + uint64(i)), 1, preCrime.oApp(), bytes32(0), 0, address(0), "", ""
+                Origin(_srcEid, _sender, _nonce + uint64(i)),
+                1,
+                preCrime.oApp(),
+                bytes32(0),
+                0,
+                address(0),
+                "",
+                ""
             );
             packets[i] = _encodePacket(packet);
         }
@@ -192,11 +200,10 @@ contract PreCrimeV2Test is TestHelper {
         );
     }
 
-    function _appendPackets(bytes[] memory _packets, bytes[] memory _newPackets)
-        internal
-        pure
-        returns (bytes[] memory)
-    {
+    function _appendPackets(
+        bytes[] memory _packets,
+        bytes[] memory _newPackets
+    ) internal pure returns (bytes[] memory) {
         bytes[] memory packets = new bytes[](_packets.length + _newPackets.length);
         for (uint256 i = 0; i < _packets.length; ++i) {
             packets[i] = _packets[i];

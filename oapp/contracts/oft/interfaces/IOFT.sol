@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-import {MessagingReceipt, MessagingFee} from "../../oapp/OAppSenderUpgradeable.sol";
+import { MessagingReceipt, MessagingFee } from "../../oapp/OAppSenderUpgradeable.sol";
 
 /**
  * @dev Struct representing token parameters for the OFT send() operation.
@@ -56,17 +56,28 @@ interface IOFT {
     error SlippageExceeded(uint256 amountLD, uint256 minAmountLD);
 
     // Events
-    event OFTSent( // GUID of the OFT message.
+    event OFTSent(
+        // GUID of the OFT message.
         // Destination Endpoint ID.
         // Address of the sender on the src chain.
         // Amount of tokens sent in local decimals.
         // Amount of tokens received in local decimals.
-    bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD);
-    event OFTReceived( // GUID of the OFT message.
+        bytes32 indexed guid,
+        uint32 dstEid,
+        address indexed fromAddress,
+        uint256 amountSentLD,
+        uint256 amountReceivedLD
+    );
+    event OFTReceived(
+        // GUID of the OFT message.
         // Source Endpoint ID.
         // Address of the recipient on the dst chain.
         // Amount of tokens received in local decimals.
-    bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD);
+        bytes32 indexed guid,
+        uint32 srcEid,
+        address indexed toAddress,
+        uint256 amountReceivedLD
+    );
 
     /**
      * @notice Retrieves interfaceID and the version of the OFT.
@@ -108,10 +119,9 @@ interface IOFT {
      * @return oftFeeDetails The details of OFT fees.
      * @return receipt The OFT receipt information.
      */
-    function quoteOFT(SendParam calldata _sendParam)
-        external
-        view
-        returns (OFTLimit memory, OFTFeeDetail[] memory oftFeeDetails, OFTReceipt memory);
+    function quoteOFT(
+        SendParam calldata _sendParam
+    ) external view returns (OFTLimit memory, OFTFeeDetail[] memory oftFeeDetails, OFTReceipt memory);
 
     /**
      * @notice Provides a quote for the send() operation.
@@ -140,8 +150,9 @@ interface IOFT {
      *  - nonce: The nonce of the sent message.
      *  - fee: The LayerZero fee incurred for the message.
      */
-    function send(SendParam calldata _sendParam, MessagingFee calldata _fee, address _refundAddress)
-        external
-        payable
-        returns (MessagingReceipt memory, OFTReceipt memory);
+    function send(
+        SendParam calldata _sendParam,
+        MessagingFee calldata _fee,
+        address _refundAddress
+    ) external payable returns (MessagingReceipt memory, OFTReceipt memory);
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import {OFTAdapterUpgradeable} from "../../contracts/oft/OFTAdapterUpgradeable.sol";
+import { OFTAdapterUpgradeable } from "../../contracts/oft/OFTAdapterUpgradeable.sol";
 
 contract OFTAdapterUpgradeableMock is OFTAdapterUpgradeable {
     constructor(address _token, address _lzEndpoint) OFTAdapterUpgradeable(_token, _lzEndpoint) {}
@@ -13,18 +13,19 @@ contract OFTAdapterUpgradeableMock is OFTAdapterUpgradeable {
     }
 
     // @dev expose internal functions for testing purposes
-    function debit(uint256 _amountToSendLD, uint256 _minAmountToCreditLD, uint32 _dstEid)
-        public
-        returns (uint256 amountDebitedLD, uint256 amountToCreditLD)
-    {
+    function debit(
+        uint256 _amountToSendLD,
+        uint256 _minAmountToCreditLD,
+        uint32 _dstEid
+    ) public returns (uint256 amountDebitedLD, uint256 amountToCreditLD) {
         return _debit(_amountToSendLD, _minAmountToCreditLD, _dstEid);
     }
 
-    function debitView(uint256 _amountToSendLD, uint256 _minAmountToCreditLD, uint32 _dstEid)
-        public
-        view
-        returns (uint256 amountDebitedLD, uint256 amountToCreditLD)
-    {
+    function debitView(
+        uint256 _amountToSendLD,
+        uint256 _minAmountToCreditLD,
+        uint32 _dstEid
+    ) public view returns (uint256 amountDebitedLD, uint256 amountToCreditLD) {
         return _debitView(_amountToSendLD, _minAmountToCreditLD, _dstEid);
     }
 
