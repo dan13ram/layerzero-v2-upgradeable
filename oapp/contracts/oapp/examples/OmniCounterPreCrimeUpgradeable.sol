@@ -16,8 +16,7 @@ contract OmniCounterPreCrimeUpgradeable is PreCrimeUpgradeable {
     constructor(address _endpoint, address _counter) PreCrimeUpgradeable(_endpoint, _counter) {}
 
     function intialize(address _delegate) external initializer {
-        __Ownable_init();
-        _transferOwnership(_delegate);
+        __Ownable_init(_delegate);
     }
 
     function buildSimulationResult() external view override returns (bytes memory) {

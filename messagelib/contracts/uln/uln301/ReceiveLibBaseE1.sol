@@ -9,6 +9,8 @@ import { AddressCast } from "@layerzerolabs/lz-evm-protocol-v2/contracts/libs/Ad
 import { AddressSizeConfig } from "./AddressSizeConfig.sol";
 import { MessageLibBase } from "../../MessageLibBase.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 // only receiver function from "@layerzerolabs/lz-evm-v1-0.7/contracts/interfaces/ILayerZeroMessagingLibrary.sol"
 // because we are separating the send and receive libraries
 interface ILayerZeroReceiveLibrary {
@@ -52,7 +54,7 @@ abstract contract ReceiveLibBaseE1 is MessageLibBase, AddressSizeConfig, ILayerZ
     error LZ_MessageLib_InvalidExecutor();
     error LZ_MessageLib_OnlyExecutor();
 
-    constructor(address _endpoint, uint32 _localEid) MessageLibBase(_endpoint, _localEid) {}
+    constructor(address _endpoint, uint32 _localEid) MessageLibBase(_endpoint, _localEid) Ownable(msg.sender) {}
 
     function setDefaultExecutors(SetDefaultExecutorParam[] calldata _params) external onlyOwner {
         for (uint256 i = 0; i < _params.length; ++i) {

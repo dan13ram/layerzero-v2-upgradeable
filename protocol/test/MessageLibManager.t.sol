@@ -9,6 +9,8 @@ import { MessageLibMock } from "./mocks/MessageLibMock.sol";
 
 import { SetConfigParam } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/IMessageLibManager.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 contract MessageLibManagerTest is LayerZeroTest {
     address internal constant OAPP = address(0xdead);
     address internal constant DELEGATE = address(0xbeef);
@@ -30,7 +32,8 @@ contract MessageLibManagerTest is LayerZeroTest {
 
     function test_registerLibraryByNotOwner() public {
         vm.startPrank(address(0x0)); // test not owner
-        vm.expectRevert("Ownable: caller is not the owner");
+        bytes memory revertData = abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(0x0));
+        vm.expectRevert(revertData);
         endpoint.registerLibrary(newMsglib);
         assertFalse(endpoint.isRegisteredLibrary(newMsglib));
     }
@@ -63,7 +66,8 @@ contract MessageLibManagerTest is LayerZeroTest {
 
     function test_setDefaultSendLibraryByNotOwner() public {
         vm.startPrank(address(0x0)); // not owner
-        vm.expectRevert("Ownable: caller is not the owner");
+        bytes memory revertData = abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(0x0));
+        vm.expectRevert(revertData);
         endpoint.setDefaultSendLibrary(2, msglib);
     }
 
@@ -95,7 +99,8 @@ contract MessageLibManagerTest is LayerZeroTest {
 
     function test_setDefaultReceiveLibraryByNotOwner() public {
         vm.startPrank(address(0x0)); // not owner
-        vm.expectRevert("Ownable: caller is not the owner");
+        bytes memory revertData = abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(0x0));
+        vm.expectRevert(revertData);
         endpoint.setDefaultReceiveLibrary(2, msglib, 0);
     }
 
@@ -124,7 +129,8 @@ contract MessageLibManagerTest is LayerZeroTest {
 
     function test_setDefaultReceiveLibraryTimeoutByNotOwner() public {
         vm.startPrank(address(0x0)); // not owner
-        vm.expectRevert("Ownable: caller is not the owner");
+        bytes memory revertData = abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(0x0));
+        vm.expectRevert(revertData);
         endpoint.setDefaultReceiveLibraryTimeout(2, msglib, 0);
     }
 

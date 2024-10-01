@@ -9,8 +9,7 @@ contract OFTUpgradeableMock is OFTUpgradeable {
 
     function initialize(string memory _name, string memory _symbol, address _delegate) external initializer {
         __OFT_init(_name, _symbol, _delegate);
-        __Ownable_init();
-        _transferOwnership(_delegate);
+        __Ownable_init(_delegate);
     }
 
     function mint(address _to, uint256 _amount) public {

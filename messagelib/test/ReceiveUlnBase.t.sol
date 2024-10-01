@@ -7,6 +7,8 @@ import { Test } from "forge-std/Test.sol";
 import { UlnConfig } from "../contracts/uln/UlnBase.sol";
 import { ReceiveUlnBase, Verification } from "../contracts/uln/ReceiveUlnBase.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 contract ReceiveUlnBaseTest is Test, ReceiveUlnBase {
     bytes32 internal headerHash = bytes32(uint256(0x1234));
     bytes32 internal payloadHash = bytes32(uint256(0x5678));
@@ -15,6 +17,8 @@ contract ReceiveUlnBaseTest is Test, ReceiveUlnBase {
     address internal optionalDVN1 = address(0x33);
     address internal optionalDVN2 = address(0x44);
     address internal oapp = address(0x55);
+
+    constructor() Ownable(msg.sender) {}
 
     function test_verified(uint64 _confirmations) public {
         vm.assume(_confirmations > 0 && _confirmations < type(uint64).max);

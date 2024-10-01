@@ -11,6 +11,8 @@ import { IMessagingChannel } from "@layerzerolabs/lz-evm-protocol-v2/contracts/i
 import { ILayerZeroEndpointV2, Origin } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/ILayerZeroEndpointV2.sol";
 import { SetConfigParam } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/IMessageLibManager.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 import { SendLibBaseE2 } from "../contracts/SendLibBaseE2.sol";
 import { WorkerOptions } from "../contracts/SendLibBase.sol";
 
@@ -115,7 +117,7 @@ contract SendLibBaseE2Test is Test {
 }
 
 contract SendLibBaseE2Mock is SendLibBaseE2 {
-    constructor(address _endpoint) SendLibBaseE2(_endpoint, type(uint256).max, 0) {}
+    constructor(address _endpoint) SendLibBaseE2(_endpoint, type(uint256).max, 0) Ownable(msg.sender) {}
 
     function setConfig(address, SetConfigParam[] calldata) external {}
 

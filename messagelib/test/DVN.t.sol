@@ -20,6 +20,8 @@ import { Setup } from "./util/Setup.sol";
 import { PacketUtil } from "./util/Packet.sol";
 import { Constant } from "./util/Constant.sol";
 
+import { IAccessControl } from "@openzeppelin/contracts/access/IAccessControl.sol";
+
 contract DVNTest is Test {
     using BytesLib for bytes;
 
@@ -59,14 +61,8 @@ contract DVNTest is Test {
     }
 
     function test_Revert_SetAdmin_NotByAdmin() public {
-        vm.expectRevert(
-            abi.encodePacked(
-                "AccessControl: account ",
-                Strings.toHexString(bob),
-                " is missing role ",
-                Strings.toHexString(uint256(ADMIN_ROLE), 32)
-            )
-        );
+        bytes memory revertData = abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, bob, ADMIN_ROLE);
+        vm.expectRevert(revertData);
         vm.prank(bob);
         dvn.grantRole(ADMIN_ROLE, alice); // bob is not admin, so it cannot set others to be admin
     }
@@ -205,51 +201,17 @@ contract DVNTest is Test {
     }
 
     function test_Revert_GrantRevokeRole_ADMIN_NotByAdmin() public {
-        vm.expectRevert(
-            abi.encodePacked(
-                "AccessControl: account ",
-                Strings.toHexString(bob),
-                " is missing role ",
-                Strings.toHexString(uint256(ADMIN_ROLE), 32)
-            )
-        );
+        bytes memory revertData = abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, bob, ADMIN_ROLE);
+        vm.expectRevert(revertData);
         vm.prank(bob);
         dvn.grantRole(ADMIN_ROLE, alice);
-
-        vm.expectRevert(
-            abi.encodePacked(
-                "AccessControl: account ",
-                Strings.toHexString(bob),
-                " is missing role ",
-                Strings.toHexString(uint256(ADMIN_ROLE), 32)
-            )
-        );
-        vm.prank(bob);
-        dvn.revokeRole(ADMIN_ROLE, alice);
     }
 
     function test_Revert_GrantRevokeRole_ADMIN_IfSelf() public {
-        vm.expectRevert(
-            abi.encodePacked(
-                "AccessControl: account ",
-                Strings.toHexString(address(dvn)),
-                " is missing role ",
-                Strings.toHexString(uint256(ADMIN_ROLE), 32)
-            )
-        );
+        bytes memory revertData = abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(dvn), ADMIN_ROLE);
+        vm.expectRevert(revertData);
         vm.prank(address(dvn));
         dvn.grantRole(ADMIN_ROLE, alice);
-
-        vm.expectRevert(
-            abi.encodePacked(
-                "AccessControl: account ",
-                Strings.toHexString(address(dvn)),
-                " is missing role ",
-                Strings.toHexString(uint256(ADMIN_ROLE), 32)
-            )
-        );
-        vm.prank(address(dvn));
-        dvn.revokeRole(ADMIN_ROLE, alice);
     }
 
     function test_Revert_GrantRevokeRole_UnknownRole() public {

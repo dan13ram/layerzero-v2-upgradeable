@@ -12,8 +12,7 @@ contract PreCrimeV2SimulatorUpgradeableMock is OAppPreCrimeSimulatorUpgradeable 
     error InvalidEid();
 
     function initialize(address _delegate) external initializer {
-        __Ownable_init();
-        _transferOwnership(_delegate);
+        __Ownable_init(_delegate);
     }
 
     function _lzReceiveSimulate(

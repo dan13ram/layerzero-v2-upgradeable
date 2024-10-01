@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import { Test } from "forge-std/Test.sol";
 
-import { UlnConfig } from "../contracts/uln/UlnBase.sol";
+import { UlnConfig, Ownable } from "../contracts/uln/UlnBase.sol";
 import { SendUlnBase } from "../contracts/uln/SendUlnBase.sol";
 import { ILayerZeroDVN } from "../contracts/uln/interfaces/ILayerZeroDVN.sol";
 
@@ -22,6 +22,8 @@ contract SendUlnBaseTest is Test, SendUlnBase {
     address internal oapp = address(0x55);
 
     mapping(address => uint256) internal fees;
+
+    constructor() Ownable(msg.sender) {}
 
     function test_getFees() public {
         // 2 must-have dvns, 2 optional dvns

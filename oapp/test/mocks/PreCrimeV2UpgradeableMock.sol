@@ -15,8 +15,7 @@ contract PreCrimeV2UpgradeableMock is PreCrimeUpgradeable {
     bytes[] public results;
 
     function initialize(address _delegate) external initializer {
-        __Ownable_init();
-        _transferOwnership(_delegate);
+        __Ownable_init(_delegate);
     }
 
     function buildSimulationResult() external view override returns (bytes memory) {

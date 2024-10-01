@@ -11,6 +11,8 @@ import { ReceiveUlnBase } from "../ReceiveUlnBase.sol";
 import { ReceiveLibBaseE2 } from "../../ReceiveLibBaseE2.sol";
 import { UlnConfig } from "../UlnBase.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 /// @dev This is a gluing contract. It simply parses the requests and forward to the super.impl() accordingly.
 /// @dev In this case, it combines the logic of ReceiveUlnBase and ReceiveLibBaseE2
 contract ReceiveUln302 is IReceiveUlnE2, ReceiveUlnBase, ReceiveLibBaseE2 {
@@ -21,7 +23,7 @@ contract ReceiveUln302 is IReceiveUlnE2, ReceiveUlnBase, ReceiveLibBaseE2 {
 
     error LZ_ULN_InvalidConfigType(uint32 configType);
 
-    constructor(address _endpoint) ReceiveLibBaseE2(_endpoint) {}
+    constructor(address _endpoint) ReceiveLibBaseE2(_endpoint) Ownable(msg.sender) {}
 
     function supportsInterface(bytes4 _interfaceId) public view override returns (bool) {
         return _interfaceId == type(IReceiveUlnE2).interfaceId || super.supportsInterface(_interfaceId);

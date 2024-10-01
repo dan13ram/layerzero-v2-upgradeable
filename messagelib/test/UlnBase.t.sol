@@ -4,11 +4,13 @@ pragma solidity ^0.8.0;
 
 import { Test } from "forge-std/Test.sol";
 
-import { UlnBase, UlnConfig, SetDefaultUlnConfigParam } from "../contracts/uln/UlnBase.sol";
+import { UlnBase, UlnConfig, SetDefaultUlnConfigParam, Ownable } from "../contracts/uln/UlnBase.sol";
 import { Constant } from "./util/Constant.sol";
 
 contract UlnBaseTest is Test, UlnBase {
     address private constant DEFAULT_CONFIG = address(0x0);
+
+    constructor() Ownable(msg.sender) {}
 
     function test_setInvalidDefaultUlnConfig() public {
         vm.startPrank(owner());

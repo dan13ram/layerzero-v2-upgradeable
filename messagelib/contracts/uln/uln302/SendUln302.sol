@@ -10,6 +10,8 @@ import { SendLibBaseE2, WorkerOptions } from "../../SendLibBaseE2.sol";
 import { UlnConfig } from "../UlnBase.sol";
 import { SendUlnBase } from "../SendUlnBase.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 /// @dev This is a gluing contract. It simply parses the requests and forward to the super.impl() accordingly.
 /// @dev In this case, it combines the logic of SendUlnBase and SendLibBaseE2
 contract SendUln302 is SendUlnBase, SendLibBaseE2 {
@@ -22,7 +24,7 @@ contract SendUln302 is SendUlnBase, SendLibBaseE2 {
         address _endpoint,
         uint256 _treasuryGasLimit,
         uint256 _treasuryGasForFeeCap
-    ) SendLibBaseE2(_endpoint, _treasuryGasLimit, _treasuryGasForFeeCap) {}
+    ) SendLibBaseE2(_endpoint, _treasuryGasLimit, _treasuryGasForFeeCap) Ownable(msg.sender) {}
 
     // ============================ OnlyEndpoint ===================================
 

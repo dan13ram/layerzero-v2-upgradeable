@@ -8,8 +8,7 @@ contract OFTAdapterUpgradeableMock is OFTAdapterUpgradeable {
 
     function initialize(address _delegate) external initializer {
         __OFTAdapter_init(_delegate);
-        __Ownable_init();
-        _transferOwnership(_delegate);
+        __Ownable_init(_delegate);
     }
 
     // @dev expose internal functions for testing purposes

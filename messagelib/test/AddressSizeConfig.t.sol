@@ -5,8 +5,11 @@ pragma solidity ^0.8.0;
 import { Test } from "forge-std/Test.sol";
 
 import { AddressSizeConfig } from "../contracts/uln/uln301/AddressSizeConfig.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract AddressSizeConfigTest is AddressSizeConfig, Test {
+    constructor() Ownable(msg.sender) {}
+
     function test_setAddressSize() public {
         vm.startPrank(owner());
 

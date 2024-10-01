@@ -20,7 +20,7 @@ contract DVNFeeLib is Ownable, IDVNFeeLib {
 
     uint256 private immutable nativeDecimalsRate;
 
-    constructor(uint256 _nativeDecimalsRate) {
+    constructor(uint256 _nativeDecimalsRate) Ownable(msg.sender) {
         nativeDecimalsRate = _nativeDecimalsRate;
     }
 

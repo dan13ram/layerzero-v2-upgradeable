@@ -60,8 +60,7 @@ contract OmniCounterUpgradeable is ILayerZeroComposer, OAppUpgradeable, OAppPreC
     constructor(address _endpoint) OAppUpgradeable(_endpoint) {}
 
     function initialize(address _delegate) public initializer {
-        __Ownable_init();
-        _transferOwnership(_delegate);
+        __Ownable_init(_delegate);
         __OAppCore_init(_delegate);
 
         admin = msg.sender;

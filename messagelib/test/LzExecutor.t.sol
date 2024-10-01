@@ -19,6 +19,8 @@ import { Setup } from "./util/Setup.sol";
 import { PacketUtil } from "./util/Packet.sol";
 import { Constant } from "./util/Constant.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 contract LzExecutorTest is Test, ILayerZeroReceiver {
     Setup.FixtureV2 internal fixtureV2;
     ReceiveUln302 internal receiveUln302;
@@ -209,7 +211,8 @@ contract LzExecutorTest is Test, ILayerZeroReceiver {
         vm.deal(address(lzExecutor), 1000);
         assertEq(address(lzExecutor).balance, 1000);
 
-        vm.expectRevert("Ownable: caller is not the owner");
+        bytes memory revertData = abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, alice);
+        vm.expectRevert(revertData);
         vm.prank(alice);
         lzExecutor.withdrawNative(alice, 1000);
     }

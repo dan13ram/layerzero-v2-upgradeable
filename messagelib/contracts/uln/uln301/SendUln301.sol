@@ -9,6 +9,8 @@ import { SendLibBaseE1 } from "./SendLibBaseE1.sol";
 import { SendUlnBase } from "../SendUlnBase.sol";
 import { UlnConfig } from "../UlnBase.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 /// @dev ULN301 will be deployed on EndpointV1 and is for backward compatibility with ULN302 on EndpointV2. 301 can talk to both 301 and 302
 /// @dev This is a gluing contract. It simply parses the requests and forward to the super.impl() accordingly.
 /// @dev In this case, it combines the logic of SendUlnBase and SendLibBaseE1
@@ -34,6 +36,7 @@ contract SendUln301 is SendUlnBase, SendLibBaseE1 {
             _localEid,
             _treasuryFeeHandler
         )
+        Ownable(msg.sender)
     {}
 
     // ============================ OnlyEndpoint ===================================

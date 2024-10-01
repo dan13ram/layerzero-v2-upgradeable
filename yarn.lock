@@ -738,8 +738,8 @@ __metadata:
     "@chainlink/contracts-ccip": "npm:^0.7.6"
     "@layerzerolabs/lz-evm-protocol-v2": "workspace:^"
     "@layerzerolabs/lz-evm-v1-0.7": "npm:^2.0.1"
-    "@openzeppelin/contracts": "npm:^4.8.1"
-    "@openzeppelin/contracts-upgradeable": "npm:^4.8.1"
+    "@openzeppelin/contracts": "npm:^5.0.2"
+    "@openzeppelin/contracts-upgradeable": "npm:^5.0.2"
     hardhat-deploy: "npm:^0.11.44"
     rimraf: "npm:^5.0.5"
     solidity-bytes-utils: "npm:^0.8.0"
@@ -753,8 +753,8 @@ __metadata:
     "@layerzerolabs/lz-evm-messagelib-v2": "workspace:^"
     "@layerzerolabs/lz-evm-protocol-v2": "workspace:^"
     "@layerzerolabs/lz-evm-v1-0.7": "npm:^2.0.1"
-    "@openzeppelin/contracts": "npm:^4.8.1"
-    "@openzeppelin/contracts-upgradeable": "npm:^4.8.1"
+    "@openzeppelin/contracts": "npm:^5.0.2"
+    "@openzeppelin/contracts-upgradeable": "npm:^5.0.2"
     hardhat-deploy: "npm:^0.11.44"
     rimraf: "npm:^5.0.5"
     solidity-bytes-utils: "npm:^0.8.0"
@@ -767,8 +767,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@layerzerolabs/lz-evm-protocol-v2@workspace:protocol"
   dependencies:
-    "@openzeppelin/contracts": "npm:^4.8.1"
-    "@openzeppelin/contracts-upgradeable": "npm:^4.8.1"
+    "@openzeppelin/contracts": "npm:^5.0.2"
+    "@openzeppelin/contracts-upgradeable": "npm:^5.0.2"
     hardhat-deploy: "npm:^0.11.44"
     rimraf: "npm:^5.0.5"
     solidity-bytes-utils: "npm:^0.8.0"
@@ -1180,10 +1180,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts-upgradeable@npm:^4.8.1":
-  version: 4.9.5
-  resolution: "@openzeppelin/contracts-upgradeable@npm:4.9.5"
-  checksum: 9a0d137bff231b60ca30840aea225f9baf1d8bf5f229d21d64c67af3793fd381d9dae9b66536ea8c156e46354d8d5b1d4141d33434892ba989f056c972f9e731
+"@openzeppelin/contracts-upgradeable@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@openzeppelin/contracts-upgradeable@npm:5.0.2"
+  peerDependencies:
+    "@openzeppelin/contracts": 5.0.2
+  checksum: 71847c6bbd7a859a2f02f496215b9664e41375589010e66da32f080d9af9215accf558da63134926e0eb3eb87ee7ab952462bc877ec5c5e1ac077b44cac9c363
   languageName: node
   linkType: hard
 
@@ -1194,10 +1196,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts@npm:^4.8.1":
-  version: 4.9.5
-  resolution: "@openzeppelin/contracts@npm:4.9.5"
-  checksum: f221d91a7dd96f9187aa832f8a160d673feb2904711bd210fab56ccfd8b8351b8150b4f0bd247701f7d4adddceba83943c049c6da11d126e07164b9abff767e0
+"@openzeppelin/contracts@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@openzeppelin/contracts@npm:5.0.2"
+  checksum: 938ebffbdade7dc59ea3df5b562c0e457bbefde9d82be8fa2acfd11da887df11653ac07922f41746b80cdbc106430e1e6978ce244fe99b00a7d9dc1418fc7670
   languageName: node
   linkType: hard
 

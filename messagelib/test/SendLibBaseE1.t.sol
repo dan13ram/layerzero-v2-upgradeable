@@ -12,6 +12,8 @@ import { SendLibBaseE1 } from "../contracts/uln/uln301/SendLibBaseE1.sol";
 import { INonceContract } from "../contracts/uln/uln301/interfaces/INonceContract.sol";
 import { ILayerZeroExecutor } from "../contracts/interfaces/ILayerZeroExecutor.sol";
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+
 contract SendLibBaseE1Test is SendLibBaseE1, Test {
     uint32 internal constant EID = 1;
     address internal constant ENDPOINT = address(0x11);
@@ -19,7 +21,7 @@ contract SendLibBaseE1Test is SendLibBaseE1, Test {
     address internal constant TREASURY_FEE_HANDLER = address(0x33);
     address internal constant EXECUTOR = address(0x44);
 
-    constructor() SendLibBaseE1(ENDPOINT, type(uint256).max, 0, NONCE_CONTRACT, EID, TREASURY_FEE_HANDLER) {}
+    constructor() SendLibBaseE1(ENDPOINT, type(uint256).max, 0, NONCE_CONTRACT, EID, TREASURY_FEE_HANDLER) Ownable(msg.sender) {}
 
     function test_withdrawFee() public {
         // mock alice has 1000 native fee

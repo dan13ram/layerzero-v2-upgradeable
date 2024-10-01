@@ -9,6 +9,8 @@ import { ILayerZeroExecutor } from "../contracts/interfaces/ILayerZeroExecutor.s
 import { ILayerZeroTreasury } from "../contracts/interfaces/ILayerZeroTreasury.sol";
 import { Treasury } from "../contracts/Treasury.sol";
 
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
 contract SendLibBaseTest is Test, SendLibBase {
     uint32 internal constant LOCAL_EID = 1;
     uint32 internal constant REMOTE_EID = 2;
@@ -18,7 +20,7 @@ contract SendLibBaseTest is Test, SendLibBase {
     address internal constant EXECUTOR = address(0x5678);
     uint256 internal constant OTHER_WORKER_FEE = 100;
 
-    constructor() SendLibBase(ENDPOINT, LOCAL_EID, type(uint256).max, 0) {
+    constructor() SendLibBase(ENDPOINT, LOCAL_EID, type(uint256).max, 0) Ownable(msg.sender) {
         treasury = address(0xdead);
     }
 
